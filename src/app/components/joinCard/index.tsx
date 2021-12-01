@@ -10,6 +10,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 
+
 const CardContainer = styled.div`
     min-height:7em;
     box-shadow: 0 1.3px 10px -3px rgba(0,0,0,0.4);
@@ -79,8 +80,21 @@ const DateCalendar = styled(Calendar)`
 
 export function JoinCard() {
 
-    const [startDate, setstartDate] = useState();
-    const [isStartCalendarOpen, setCalendarOpen] = useState(false);
+    const [startDate, setStartDate] = useState<Date>(new Date());
+    const [isStartCalendarOpen, setStartCalendarOpen] = useState(false);
+
+    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [isEndCalendarOpen, setEndCalendarOpen] = useState(false);
+
+    const toggleStartCalendar = () => {
+        setStartCalendarOpen(!isStartCalendarOpen);
+        if(isEndCalendarOpen) setEndCalendarOpen(false);
+    };
+
+    const toggleEndCalendar = () => {
+        setEndCalendarOpen(!isEndCalendarOpen);
+        if(isStartCalendarOpen) setStartCalendarOpen(false);
+    };
 
     return (
         <CardContainer>
@@ -88,19 +102,20 @@ export function JoinCard() {
                 <Icon>
                     <FontAwesomeIcon icon={faCalendarAlt} />
                 </Icon>
-                <Name>
+                <Name onClick={toggleStartCalendar}>
                     Start Date
                 </Name>
-                {isStartCalendarOpen && <DateCalendar />}
+                {isStartCalendarOpen && <DateCalendar value={startDate} onChange={setStartDate as any} />}
             </ItemContainer>
             <LineDivider />
             <ItemContainer>
                 <Icon>
                     <FontAwesomeIcon icon={faCalendarAlt} />
                 </Icon>
-                <Name>
+                <Name onClick={toggleEndCalendar}>
                     End Date
                 </Name>
+                {isEndCalendarOpen && <DateCalendar value={endDate} onChange={setEndDate as any} /> }
             </ItemContainer>
             <Marginer direction="horizontal" margin="2em" />
             <Button theme="filled" text="Fight" />

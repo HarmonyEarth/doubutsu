@@ -17,7 +17,6 @@ const NavItem = styled.li<{menu?: any}>`
     ${tw`
         text-sm
         md:text-base
-        text-black
         font-medium
         mr-1
         md:mr-5
@@ -25,7 +24,6 @@ const NavItem = styled.li<{menu?: any}>`
         transition
         duration-300
         ease-in-out
-        hover:bg-green-100
     `};
 
     ${({ menu }) => menu && css`
